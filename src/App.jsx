@@ -1,9 +1,14 @@
 import { Button } from "@/components/ui/button"
+import Header from "./shared/Header";
+import { Outlet } from "react-router-dom";
+import Footer from "./shared/Footer";
 
 const App = () => {
   return (
     <div>
-      <Button  size='lg'>Button</Button>
+     <Header></Header>
+     <Outlet></Outlet>
+     <Footer></Footer>
     </div>
   );
 };
