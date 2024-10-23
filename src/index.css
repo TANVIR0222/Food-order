@@ -2,6 +2,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
 body{
   font-family: "Roboto", sans-serif;
 }
@@ -67,4 +69,8 @@ body{
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.input{
+  @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-black
 }
