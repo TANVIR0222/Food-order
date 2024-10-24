@@ -1,5 +1,6 @@
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,7 +8,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useEffect, useState } from "react";
-import { IoCartOutline , IoHeartOutline } from "react-icons/io5";
+import { IoCartOutline, IoHeartOutline } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 const navbar = [
   {
@@ -18,17 +20,17 @@ const navbar = [
   {
     id: 2,
     title: "Our Menu",
-    path: "/",
+    path: "/shop",
   },
   {
     id: 3,
-    title: "Our Shop",
-    path: "/",
+    title: "Abouts",
+    path: "/about",
   },
   {
     id: 4,
     title: "Contact us",
-    path: "/",
+    path: "/contact",
   },
 ];
 
@@ -103,15 +105,29 @@ const Header = () => {
           {/*  */}
 
           {/* lgonin func  */}
-
+          {/*
+           */}
           <div className="flex justify-center items-center gap-1 md:gap-4">
-            <Badge size={'sm'} variant={"menubtn"}>
-              <IoHeartOutline className="text-2xl" />
-            </Badge>
-            <Badge size={'sm'}  variant={"menubtn"}>
-              <IoCartOutline className="text-2xl" />
-            </Badge>
-            <Button variant={"cusbtn"}>Login</Button>
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button size={"sm"} variant={"menubtn"}>
+                  <IoHeartOutline className="text-2xl" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent>tanvri</SheetContent>
+            </Sheet>
+            {/*  */}
+
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button size={"sm"} variant={"menubtn"}>
+                  <IoCartOutline className="text-2xl" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent></SheetContent>
+            </Sheet>
+
+            <Link to={'/login'} ><Button variant={"cusbtn"}>Login</Button></Link>
           </div>
         </div>
       </nav>

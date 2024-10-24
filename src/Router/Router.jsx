@@ -1,4 +1,5 @@
 import App from "@/App";
+import UserLoginFrom from "@/pages/Auth/UserLoginFrom";
 import Home from "@/pages/Home/Home";
 import About from "@/pages/informations/About";
 import Contact from "@/pages/informations/Contact";
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
     {
       path: "/contact",
       element: <Contact />,
+    },
+    {
+      path: "/login",
+      element: <UserLoginFrom />,
     },
     {
       path: "/deatils/:id",
