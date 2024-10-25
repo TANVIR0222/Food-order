@@ -3,18 +3,48 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoEyeOutline } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa";
+import { useRegisterUserMutation } from "@/app/features/auth/authAp";
+import { useNavigate } from "react-router-dom";
 
 const Resigter = () => {
-  const [showPassword, setshowPassword] = useState(false);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {};
+
+  // show pass 
+  const [showPassword, setshowPassword] = useState(false);
   const togglePasswordVisibility = () => {
     setshowPassword(!showPassword);
   };
+
+  // 
+
+  const [registerUser , isLoading, error ] =  useRegisterUserMutation();
+  
+  const navigate = useNavigate();
+  // register
+  const onSubmit =async (data) => {
+    const  username = data.name;
+    const  email = data.email;
+    const  password = data.password;
+
+    console.log({username,email,password});
+
+
+    try {
+        const res = await registerUser({username,email,password}).unwrap();
+        console.log(res);
+        navigate('/')
+    } catch (error) {
+      console.log(error);
+      
+    }
+    
+  };
+  
   return (
     <div>
       <div className="">
@@ -68,13 +98,15 @@ const Resigter = () => {
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="email"
             >
-              Email
+              Password
             </label>
             <input
               id="password"
               type={showPassword ? "text" : "password"}  // Toggle input type
               className="input"
               placeholder="Enter your password"
+              {...register("password", { required: true })}
+
             />
             <button
           onClick={togglePasswordVisibility}
