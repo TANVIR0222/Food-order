@@ -1,44 +1,79 @@
-import FoodCart from "@/components/FoodCart/FoodCart";
-import Autoplay from "embla-carousel-autoplay"
+import { Card, CardContent } from "@/components/ui/card";
+import Autoplay from "embla-carousel-autoplay";
+const cards = [
+  {
+    id: 1,
+    name: "Salad",
+    trend: "2024 Trend",
+    image: "/slide1.jpg",
+  },
+  {
+    id: 2,
+    name: "Pizza",
+    trend: "2024 Trend",
+    image: "/slide2.jpg",
+  },
+  {
+    id: 3,
+    name: "Soup",
+    trend: "2024 Trend",
+    image: "/slide3.jpg",
+  },
+  {
+    id: 4,
+    name: "Dessert",
+    trend: "2024 Trend",
+    image: "/slide4.jpg",
+  },
+  {
+    id: 5,
+    name: "Offered ",
+    trend: "2024 Trend",
+    image: "/slide5.jpg",
+  },
+];
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 } from "@/components/ui/carousel";
-import { useEffect, useRef, useState } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 
 const SpecialDishes = () => {
-
-    const [menu, setMenu] = useState([]);
-
-    useEffect(() => {
-        fetch('/menu.json')
-        .then(response => response.json())
-        .then(data => setMenu(data))
-    }, []);
-
-    const popular  = menu.filter((item) => item.category === 'popular')
-    const plugin = useRef(
-        Autoplay({ delay: 2000, stopOnInteraction: true })
-    );
-    
+  const plugin = React.useRef(
+    Autoplay({ delay: 2000, stopOnInteraction: true })
+  );
   return (
-    <div className="md:my-20 my-10">
-        <div className=" my-6 leading-9 text-sm md:text-2xl space-y-3">
-        <h5 className="text-red uppercase">Customer Favorites</h5>
-        <h1 className="text-3xl md:text-6xl font-bold leading-8">Standout Dishes <br /> From Our Menu</h1>
+    <div>
+      <div className="  my-6 space-y-4 text-sm md:text-2xl ">
+        <h5 className="text-red uppercase">Special Dishes</h5>
+        <h1 className="text-3xl md:text-5xl font-bold">Stand Out Dishes <br /> From Our Menu</h1>
       </div>
       <Carousel
-        plugins={[plugin.current]}
-        className="w-full "
-        onMouseEnter={plugin.current.stop}
-        onMouseLeave={plugin.current.reset}
+        plugins={[
+          Autoplay({
+            delay: 2000,
+          }),
+        ]}
+        className="w-full my-10"
       >
-        <CarouselContent>
-          {popular.map((item) => (
-            <CarouselItem key={item._id} className="md:basis-1/2 lg:basis-1/3">
-              <div className="p-1">
-                  <FoodCart item={item} />
+        <CarouselContent className="-ml-1">
+          {cards.map((items) => (
+            <CarouselItem key={items.id} className=" md:basis-1/2 lg:basis-1/3">
+              <div className="">
+                <CardContent className="flex aspect-square items-center justify-center w-full">
+                  <Link to={'/shop'}>
+                  <div className="">
+                    <img src={items.image} alt="" />
+                    <h2 className="text-xl font-bold ml-5 text-white -mt-8">
+                      {items.name}
+                    </h2>
+                  </div>
+                  </Link>
+                </CardContent>
               </div>
             </CarouselItem>
           ))}

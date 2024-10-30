@@ -8,6 +8,9 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Card, CardContent } from "@/components/ui/card";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { IoCartOutline } from "react-icons/io5";
+import { Button } from "@/components/ui/button";
 
 const coverImg = [
   {
@@ -57,7 +60,6 @@ const Banner = () => {
             </CarouselItem>
           ))}
         </CarouselContent>
-        
       </Carousel>
     </div>
   );

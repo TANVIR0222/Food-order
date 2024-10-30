@@ -1,13 +1,58 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
+import { useGetAllProductQuery } from "@/app/features/product/productApi";
+import ScrollBarMenu from "@/components/Popular/ScrollBarMenu";
+import { useCartDataPostMutation } from "@/app/features/cart/cartApi";
+import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
 const DeatilsPage = () => {
-  const { name } = useParams();
+  const { id } = useParams();
+  const { data: products, isLoading, error } = useGetAllProductQuery(id);
+
+  const { user } = useSelector((state) => state.auth);
+  const userId = user?.id;
+  const [cartDataPost] = useCartDataPostMutation();
+
+  const handleAddToCart = async (item) => {
+    const userId = user?.id;
+    const productId = item?._id;
+    const name = item?.name;
+    const image = item?.image;
+    const category = item?.category;
+    const price = item?.price;
+
+    try {
+      const res = await cartDataPost({
+        userId,
+        productId,
+        name,
+        image,
+        category,
+        price,
+      }).unwrap();
+      console.log(res);
+
+      if (res.product) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: `${name} add to cart`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  if (isLoading) return <p>Loading....</p>;
 
   return (
-    <div className="">
-      <section className=" h-96 bg-primarybg ">
+    <div className=" ">
+      <section className=" h-80 md:h-96 bg-primarybg space-y-4 ">
         <div className=" flex flex-col items-center justify-center h-full">
           <div className="">
             <h1 className=" capitalize">single Food Page</h1>
@@ -21,18 +66,18 @@ const DeatilsPage = () => {
               <Link to={"/shop"}>Menu</Link>
               <IoIosArrowForward />
             </span>
-            <span>Products name </span>
+            <span>{products?.products?.name} </span>
           </div>
         </div>
       </section>
 
-      <section className="my-7">
+      <section className="my-7  mx-4 md:mx-[1px]">
         <div className="flex flex-col md:flex-row items-center">
           {/* product ing */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div className=" ">
               <img
-                src="https://images.unsplash.com/photo-1512201078372-9c6b2a0d528a?q=80&w=2073&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                src={products?.products?.image}
                 alt=""
                 className=" rounded-md w-96 h-auto"
               />
@@ -40,37 +85,46 @@ const DeatilsPage = () => {
 
             {/*  */}
             <div className="">
-              <h3 className="text-3xl font-medium mb-4">Product Name </h3>
+              <h3 className="text-3xl font-medium mb-4">
+                {products?.products?.name}{" "}
+              </h3>
               <p className="text-xl text-primary mb-4">
-                $100 <s>$130</s>{" "}
+                ${products?.products?.price} <s className="text-red">$20</s>{" "}
               </p>
               <p className="text-gray-400 font-medium mb-4">
-                This is an Products description
+                {products?.products?.recipe}
               </p>
 
               {/* products info */}
-              <div className="">
+              <div className=" space-y-2">
                 <p>
-                  <strong>Category : </strong> accessories
+                  <strong>Category : </strong> {products?.products?.category}
                 </p>
-                <p>
-                  <strong>color : </strong> blue
-                </p>
+
                 <div className=" flex items-center gap-4">
-                  <strong>Rating : </strong>
+                  <strong>
+                    Rating :{" "}
+                    <span className="text-orange-400 ">
+                      {products?.products?.rating}{" "}
+                    </span>{" "}
+                  </strong>
                   {/* <Rating rating={'4'} /> */}
                 </div>
 
-                <button className=" px-6 py-3 bg-blue-600 text-white rounded">
+                <button
+                  onClick={() => handleAddToCart(products?.products)}
+                  className=" px-6 py-3 bg-blue-600 text-white rounded"
+                >
                   Add to card
                 </button>
               </div>
 
               {/* display reviews */}
-              {/* TODO : work api  */}
-              <section className="section__container "></section>
             </div>
           </div>
+        </div>
+        <div className="md:my-16 my-10">
+          <ScrollBarMenu />
         </div>
       </section>
     </div>

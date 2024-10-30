@@ -2,6 +2,9 @@ import { Button } from "@/components/ui/button";
 import React from "react";
 
 const Contact = () => {
+  
+  
+  
   return (
     <div>
       <section className=" h-80 bg-primarybg ">

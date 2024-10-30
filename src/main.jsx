@@ -7,11 +7,11 @@ import { Provider } from "react-redux";
 import { store } from "./app/store";
 
 createRoot(document.getElementById("root")).render(
+  <div className="max-w-screen-xl mx-auto	">
     <Provider store={store}>
-      <div className="max-w-screen-xl mx-auto	">
       <StrictMode>
         <RouterProvider router={router} />
       </StrictMode>
-    </div>
     </Provider>
+  </div>
 );

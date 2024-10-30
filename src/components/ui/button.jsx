@@ -20,7 +20,8 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         menubtn:'bg-slate-300 p-2 rounded',
-        cusbtn: 'bg-green text-white'
+        cusbtn: 'bg-green text-white',
+        delete: 'bg-red text-white'
       },
       size: {
         default: "h-9 px-4 py-2",
